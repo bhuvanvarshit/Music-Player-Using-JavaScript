@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="title"><h2>Music Player</h2></div>
+     <section class="container">
+        <section class="box-container">
+        <div class="Genre-container">
+                <div class="filter-title">
+                <p>Filter by Genre:</p>
+                </div>
+                <div class="Genre-dropdown">
+                    <select name="Genre" id="Genre">
+                        <option value="all">All</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Pop">Pop</option>
+                        <option value="HipHop">Hip Hop</option>
+                      </select>
+                </div>  
+        </div>
+        <div>
+            <h2 class="song-text">All Songs</h2>
+            <div class="button-container">
+            <button class="song-btn" id="song-btn1">Shape Of You-Ed Sheeran</button>
+            <button class="song-btn" id="song-btn2">All Of Me-Adele</button>
+            <button class="song-btn" id="song-btn3">Somelike Like You-Adele</button>
+            <button class="song-btn" id="song-btn4">Wonderwall-Oasis</button>
+            <button class="song-btn" id="song-btn5">Sugar-Maroon</button>
+            <button class="song-btn" id="song-btn6">Locked Away-R. City</button>
+            </div>
+        </div>
+        </section>
+        <section class="box-container mid-column">
+            <div class="box">
+                <img src="./images/locked away.jpeg" alt="locked">
+                <div>
+                    <h3>Locked Away</h3>
+                    <p>R.City</p>
+                </div>
+            </div>
+            <div class="audio">
+            <audio controls="true">
+                <source src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-61905/zapsplat_multimedia_alert_chime_short_musical_notification_cute_child_like_001_64918.mp3?_=1" type="audio/mpeg">
+              </audio>
+            </div>
+            <div class="control-buttons">
+                <button class="back">‹‹</button>
+                <button class="next">››</button>
+            </div>
+            <div class="add-playlist">
+                <button class="AddToPlaylist">Add To Playlist</button>
+            </div>
+            </section>
+            <section class="enterplaylist">
+                <div class="input-playlist">
+                    <input placeholder="Enter Playlist Name" class="enter-playlist-text"/>
+                    <button class="create-playlist">Create Playlist</button>
+                </div>
+                <section class="box-container-playlist">
+                        <div class="current-playlist">
+                            <h3>Current Playlist</h3>
+                            <div class="button-container">
+                                <button class="song-btn" id="song-btn1">Shape Of You-Ed Sheeran</button>
+                                <button class="song-btn" id="song-btn2">All Of Me-Adele</button>
+                            </div>
+                        </div>
+                        <div class="all-playlists">
+                            <h3>All Playlists</h3>
+                            <div class="button-container">
+                                <button class="song-btn" id="song-btn1">Shape Of You-Ed Sheeran</button>
+                                <button class="song-btn" id="song-btn2">All Of Me-Adele</button>
+                            </div>
+                        </div>
+                </section>
+            </section>
+    </section>
+</body>
+</html>
