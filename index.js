@@ -11,7 +11,7 @@ const jsonObject = {
     {
       "id": 2,
       "SongTitle": "Sugar",
-      "SongImage": "./images/sugarmaroon.jpeg",
+      "SongImage": "./images/sugar maroon.jpeg",
       "SongSingerName": "Maroon",
       "Genre": "Hip Hop",
       "AudioMp3File": "./audio/sugar.mp3"
@@ -38,7 +38,7 @@ const jsonObject = {
       "SongImage": "./images/somelike Like You.jpeg",
       "SongSingerName": "Adele",
       "Genre": "Pop",
-      "AudioMp3File": "somelike-like-you.mp3"
+      "AudioMp3File": "./audio/somelike-like-you.mp3"
     },
     {
       "id": 6,
@@ -46,7 +46,7 @@ const jsonObject = {
       "SongImage": "./images/wonder-wall.jpeg",
       "SongSingerName": "Oasis",
       "Genre": "Rock",
-      "AudioMp3File": "./audio/wonderwall-mp3"
+      "AudioMp3File": "./audio/wonderwall.mp3"
     }
   ]
 };
@@ -73,27 +73,16 @@ function appendGenreDropdown()
 }
 appendGenreDropdown();
 
-function allSongsList()
-{
-    const songsList = [];
-     jsonObject.Songs.map(x=>{
-        const songlistitem = x.SongTitle +" - "+ x.SongSingerName; 
-        songsList.push(songlistitem);
-    });
-    console.log(songsList); 
-    return songsList;
-}
-
 function appendSonglist()
 {
-        const songsList = allSongsList();
         document.addEventListener('DOMContentLoaded', () => {
             let count = 1;
-            songsList?.forEach(songitem => {
+            jsonObject.Songs?.forEach(songitem => {
             const buttondiv = document.getElementById('button-container');
             const button = document.createElement('button');//<button class="song-btn" id="song-btn-1"> songtitle + singername </button>
-            button.textContent = songitem;
+            button.textContent = songitem.SongTitle +" - "+ songitem.SongSingerName; ;
             button.className = "song-btn";
+            button.setAttribute("song-btn-data-id",songitem.id);
             button.id="song-btn-"+ count;
             count++;
             buttondiv.appendChild(button);
@@ -113,32 +102,6 @@ function addnewgenre(){
         });
     });
 }
-
-
-// function displaynewgenre(filteredData){
-//            const genredropdownDiv = document.getElementsByClassName('Genre-dropdown');
-//            genredropdownDiv.innerHTML ='';
-//            filteredData.forEach(item => {
-//                  const div = document.createElement('div');
-//                  div.textcontent = item.SongSingerName;
-//                  genredropdownDiv.appendChild(div);      
-//            });
-
-//         }
-
-// document.getElementById('Genre').addEventListener('change', function(){
-//     const selectedOption = this.value;
-//     let filteredData;
- 
-//     if (selectedOption === 'all') {
-//         filteredData = jsonObject;
-//     } else {
-//            filteredData = jsonObject.filter(item =>item.Genre === selectedOption);
-//     }
-//     displaynewgenre(filteredData);
-// });
-
-// displaynewgenre(jsonObject);
 
 document.addEventListener('DOMContentLoaded', filterbasedonGenre);
 
@@ -165,8 +128,82 @@ function appendSongslisttoButton(filteredData){
                let button = document.createElement('button');//<button class="song-btn" id="song-btn-1"> songtitle + singername </button>
                  button.textContent = item.SongTitle + " - "+ item.SongSingerName;
                  button.className = "song-btn";
+                 button.setAttribute("song-btn-data-id",item.id);
                  button.id="song-btn-"+ count;
                  count++;
                  buttondiv.appendChild(button);
-             });          
- }
+                 button.addEventListener('click', handleClick);
+          });     
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  setTimeout(function () {
+    document.querySelectorAll('.song-btn').forEach(button => {
+      button.addEventListener('click', handleClick);
+  });
+});
+});
+let currentIndex =0;
+let playlist = [];
+function onclickprevnextbutton(){
+  document.getElementById('back').addEventListener('click', () => changeSong(-1));
+  document.getElementById('next').addEventListener('click', () => changeSong(1));
+ /* document.getElementById('AddToPlaylist').addEventListener('click',appendToPlaylist);*/
+}
+document.addEventListener('DOMContentLoaded', onclickprevnextbutton);
+function changeSong(direction) {
+  currentIndex += direction;
+  if (currentIndex < 0) currentIndex = jsonObject.Songs.length - 1;
+  if (currentIndex >= jsonObject.Songs.length) currentIndex = 0;
+  updateSong(jsonObject.Songs[currentIndex]);
+}
+
+function updateSong(matchedItem){
+        let image = document.getElementById('song-image');
+         let songtitle = document.getElementById('song-title');
+         let singername = document.getElementById('song-singer');
+         let AudioFile = document.getElementById('audio-file')
+         let back = document.getElementById('back');
+         let next = document.getElementById('next');
+         if(matchedItem){
+           if(image) {
+                image.src =  matchedItem.SongImage;
+           }
+           if(songtitle) {
+            songtitle.textContent =  matchedItem.SongTitle;
+           }
+           if(singername) {
+            singername.textContent =  matchedItem.SongSingerName;
+           }
+           if(AudioFile) {
+            let audioSource = AudioFile.querySelector('source');
+            audioSource.src = matchedItem.AudioMp3File;
+            AudioFile.load();
+           }
+           back.setAttribute("prev-id", matchedItem.id - 1);
+           next.setAttribute("next-id", matchedItem.id + 1);
+          }
+           
+}
+
+/*function appendToPlaylist(){
+       let matchedItem = jsonObject.Songs[currentIndex];
+
+       if(matchedItem) {
+            playlist.push(matchedItem);
+            console.log(playlist);
+       }
+}*/
+function handleClick(event){
+    let buttonid = parseInt(event.target.getAttribute('song-btn-data-id'));
+     console.log(buttonid);
+     let matchedItem = jsonObject.Songs.filter(item => item.id === parseInt(buttonid));
+     currentIndex = buttonid -1;
+     if (matchedItem) {
+      updateSong(matchedItem[0]);
+      }
+   }
+ 
+  
+
+  
