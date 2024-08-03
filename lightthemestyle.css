@@ -8,6 +8,15 @@ html,body{
     width:100%;
 
 }
+.header{
+    display: flex;
+    flex-direction: row;
+}
+
+.title{
+    text-align: center;
+    padding-left: 500px;
+}
 .title h2{
   margin-bottom: 20px;
   margin-right:10px;
@@ -38,7 +47,7 @@ html,body{
     display:flex;
     flex-direction: column;
 }
-.song-btn{
+.song-btn, .current-playlist-button, .playlistbutton{
     height:40px;
     width:80%;
     background-color:rgb(77, 94, 182);
@@ -130,6 +139,68 @@ html,body{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+/*Toggle button*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-top: 10px;
+    margin-left: 400px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: rgb(148, 147, 203);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px rgb(148, 147, 203);
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 /*mobile version*/
 @media only screen and (max-width: 768px) {
     [class*="col-"] {
