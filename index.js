@@ -186,6 +186,16 @@ function updateSong(matchedItem){
            
 }
 
+function handleClick(event){
+  let buttonid = parseInt(event.target.getAttribute('song-btn-data-id'));
+   console.log(buttonid);
+   let matchedItem = jsonObject.Songs.filter(item => item.id === parseInt(buttonid));
+   currentIndex = buttonid -1;
+   if (matchedItem) {
+    updateSong(matchedItem[0]);
+    }
+ }
+
 /*function appendToPlaylist(){
        let matchedItem = jsonObject.Songs[currentIndex];
 
@@ -194,16 +204,144 @@ function updateSong(matchedItem){
             console.log(playlist);
        }
 }*/
-function handleClick(event){
-    let buttonid = parseInt(event.target.getAttribute('song-btn-data-id'));
-     console.log(buttonid);
-     let matchedItem = jsonObject.Songs.filter(item => item.id === parseInt(buttonid));
-     currentIndex = buttonid -1;
-     if (matchedItem) {
-      updateSong(matchedItem[0]);
-      }
+
+
+function addtoplaylist(){
+       let matchedItem = jsonObject.Songs[currentIndex];
+       let isAlreadyInPlaylist = playlist.some(song => song.id === matchedItem.id);
+      
+       if (!isAlreadyInPlaylist) {
+           playlist.push(matchedItem);
+           console.log('Added to playlist:', matchedItem);
+           currentplaylist();
+       } else {
+           console.log('Song is already in the playlist');
+       }
+       if(playlist.length>0){
+        let playlistid = document.querySelectorAll('.playlistbutton');
+        if(playlistid.length>0){
+           saveplaylist.set(playlistid[0].id, playlist) 
+          } ;
+        }
    }
- 
+  
+   let playlists = [];
+   let currentPlaylist = [];
+   
+  //  function AddToAllPlaylist(song){
+  //       currentPlaylist.push(song);
+  //       currentplaylist();
+  //  } 
+
+
+   function currentplaylist(){
+           const playlistContainer = document.getElementById('playlist');
+           playlistContainer.innerHTML = '';
+
+           playlist.forEach((song,index) => {
+              const songButton = document.createElement('button');
+              songButton.className = 'current-playlist-button';
+              songButton.textContent = song.SongTitle + " - "+ song.SongSingerName;
+              songButton.setAttribute("song-btn-data-id", song.id);
+
+              songButton.addEventListener('click', () => {
+                  index = jsonObject.Songs.findIndex(s => s.id === song.id);
+                  updateSong(song);
+              });
+              playlistContainer.appendChild(songButton);
+              
+           }); 
+   }
+
+//    function createplaylist(){
+//            const playlistName = document.getElementById('newplaylist').value.trim();
+
+//            if (playlistName && currentPlaylist.length > 0) {
+//              const playlist = {
+//                name: "My Playlist",
+//                songs: [...currentPlaylist]
+//              };
+//              playlists.push(playlist);
+//            };
+
+//            const newPlaylist = {
+//                name: playlistName,
+//                songs: [...currentPlaylist]
+//            };
+//            playlists.push(newPlaylist);
+
+//            console.log('Playlists Created:',  playlist, newPlaylist)
+           
+//            currentPlaylist = [];
+//            currentplaylist();
+//            renderAllPlaylists();
+
+//            document.getElementById('newplaylist').value = '';
+//  }
+
+//  function renderAllPlaylists(){
+//      const playlists = document.getElementById('myplaylist');
+//      playlists.innerHTML = '';
+     
+//      playlists.forEach((playlist, index) => {
+//          const playlistButton = document.createElement('button');
+//          playlistButton.textContent = playlist.name;
+//          playlistButton.className = 'all-playlists';
+//          playlistButton.setAttribute('song-btn-data-id', index);
+     
+//      playlistButton.addEventListener('click', () => {
+//            console.log('Selected Playlist:', playlist.name);
+//      });    
+     
+//      playlistsContainer.appendChild(playlistButton);
+//      });
+//   }
+
+//   document.addEventListener('DOMContentLoaded', function() {
+//        document.getElementById('createPlaylistBtn').addEventListener('click', create-playlist);
+//   });
+//   renderAllPlaylists();
+let saveplaylist= new Map();
+function createPlaylist()
+{
+  const playlistid = document.getElementById('playlistid');
+  const playlistcontainer = document.getElementById('myplaylistcontainer');
+  const playlistbutton = document.createElement('button');
+  if(playlistid.value){
+      playlistbutton.textContent = playlistid.value;
+      playlistbutton.className = 'playlistbutton';
+      playlistbutton.id = playlistid.value.replace(" ", "-");
+      saveplaylist.set(playlistbutton.id, "");
+      playlist = [];
+      playlistbutton.addEventListener('click', () => {
+        refreshplaylist(playlistbutton.id);
+     });
+      playlistcontainer.appendChild(playlistbutton);
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('create-playlist').addEventListener('click', createPlaylist);
+});
+document .addEventListener('DOMContentLoaded', function(){
+  document.getElementById('AddToPlaylist').addEventListener('click', addtoplaylist);
+});
+
+function refreshplaylist(playlistid)
+{
+    const playlistContainer = document.getElementById('playlist');
+    playlistContainer.innerHTML = '';   
+        let getplaylist = saveplaylist.get(playlistid);
+        getplaylist.forEach((song,index) => {
+          const songButton = document.createElement('button');
+          songButton.className = 'current-playlist-button';
+          songButton.textContent = song.SongTitle + " - "+ song.SongSingerName;
+          songButton.setAttribute("song-btn-data-id", song.id);
+          playlistContainer.appendChild(songButton);    
+       }); 
+    playlist = [];
+}
+
+
   
 
   

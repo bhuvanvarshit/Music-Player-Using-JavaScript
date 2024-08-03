@@ -2,35 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genre Playlist</title>
-    <style>
-        body {
-            transition: background-color 0.5s;
-        }
-        .playlist {
-            margin-top: 20px;
-        }
-        .playlist ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .playlist li {
-            margin: 5px 0;
-        }
-    </style>
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/index.js"></script>
+    <link href="/favicon.ico" type="image/x-icon" rel="icon" />
 </head>
 <body>
-    <h1>Select a Genre</h1>
-    <select id="genreDropdown">
-        <option value="rock">Rock</option>
-        <option value="jazz">Jazz</option>
-        <option value="classical">Classical</option>
-        <option value="pop">Pop</option>
-    </select>
-
-    <div class="playlist" id="playlist"></div>
-
-    <script src="default.js"></script>
+ <div class="title"><h2>Music Player</h2></div>
+     <section class="container">
+        <section class="box-container">
+        <div class="Genre-container">
+                <div class="filter-title">
+                <p>Filter by Genre:</p>
+                </div>
+                <div class="Genre-dropdown">
+                    <select name="Genre" id="Genre" >
+                        <option value="all" selected>All</option>
+                      </select>
+                </div>  
+        </div>
+        <div>
+            <h2 class="song-text">All Songs</h2>
+            <div class="button-container" id="button-container">
+            </div>
+        </div>
+        </section>
+        <section class="box-container mid-column">
+            <div class="box">
+                <img src="./images/Locked_Away.jpeg" alt="locked" id="song-image">
+                <div>
+                    <h3 id="song-title">Locked Away</h3>
+                    <p id="song-singer">R.City</p>
+                </div>
+            </div>
+            <div class="audio">
+            <audio controls="true" id="audio-file">
+                <source src="./audio/Locked_Away.mp3" type="audio/mpeg" >
+              </audio>
+            </div>
+            <div class="control-buttons">
+                <button class="back" id="back">‹‹</button>
+                <button class="next" id="next">››</button>
+            </div>
+            <div class="add-playlist">
+                <button class="AddToPlaylist" id="AddToPlaylist">Add To Playlist</button>
+            </div>
+            </section>
+            <section class="enterplaylist">
+                <div class="input-playlist">
+                    <input placeholder="Enter Playlist Name" class="enter-playlist-text" id="playlistid"/>
+                    <button class="create-playlist" id="create-playlist">Create Playlist</button>
+                </div>
+                <section class="box-container-playlist">
+                        <div class="current-playlist">
+                            <h3>Current Playlist</h3>
+                            <div class="button-container" id="playlist">
+                            </div>
+                        </div>
+                        <div class="all-playlists">
+                            <h3>All Playlists</h3>
+                            <div class="button-container" id="myplaylist">
+                            </div>
+                        </div>
+                </section>
+            </section>
+    </section>
 </body>
 </html>
