@@ -52,6 +52,10 @@ const jsonObject = {
 };
 console.log(jsonObject);
 
+let playlists = [];
+let currentPlaylist = [];
+let saveplaylist= new Map();
+
 function getGenre()
 {
     const genre = jsonObject.Songs.map(x=>x.Genre);
@@ -90,8 +94,6 @@ function appendSonglist()
     });
 }
 appendSonglist();
-
-
 
 function addnewgenre(){
     document.addEventListener('DOMContentLoaded', () => {
@@ -143,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 });
+
 let currentIndex =0;
 let playlist = [];
 function onclickprevnextbutton(){
   document.getElementById('back').addEventListener('click', () => changeSong(-1));
   document.getElementById('next').addEventListener('click', () => changeSong(1));
- /* document.getElementById('AddToPlaylist').addEventListener('click',appendToPlaylist);*/
 }
 document.addEventListener('DOMContentLoaded', onclickprevnextbutton);
 function changeSong(direction) {
@@ -196,16 +198,6 @@ function handleClick(event){
     }
  }
 
-/*function appendToPlaylist(){
-       let matchedItem = jsonObject.Songs[currentIndex];
-
-       if(matchedItem) {
-            playlist.push(matchedItem);
-            console.log(playlist);
-       }
-}*/
-
-
 function addtoplaylist(){
        let matchedItem = jsonObject.Songs[currentIndex];
        let isAlreadyInPlaylist = playlist.some(song => song.id === matchedItem.id);
@@ -220,19 +212,10 @@ function addtoplaylist(){
        if(playlist.length>0){
         let playlistid = document.querySelectorAll('.playlistbutton');
         if(playlistid.length>0){
-           saveplaylist.set(playlistid[0].id, playlist) 
+           saveplaylist.set(playlistid[playlistid.length -1].id, playlist) 
           } ;
         }
    }
-  
-   let playlists = [];
-   let currentPlaylist = [];
-   
-  //  function AddToAllPlaylist(song){
-  //       currentPlaylist.push(song);
-  //       currentplaylist();
-  //  } 
-
 
    function currentplaylist(){
            const playlistContainer = document.getElementById('playlist');
@@ -253,60 +236,13 @@ function addtoplaylist(){
            }); 
    }
 
-//    function createplaylist(){
-//            const playlistName = document.getElementById('newplaylist').value.trim();
-
-//            if (playlistName && currentPlaylist.length > 0) {
-//              const playlist = {
-//                name: "My Playlist",
-//                songs: [...currentPlaylist]
-//              };
-//              playlists.push(playlist);
-//            };
-
-//            const newPlaylist = {
-//                name: playlistName,
-//                songs: [...currentPlaylist]
-//            };
-//            playlists.push(newPlaylist);
-
-//            console.log('Playlists Created:',  playlist, newPlaylist)
-           
-//            currentPlaylist = [];
-//            currentplaylist();
-//            renderAllPlaylists();
-
-//            document.getElementById('newplaylist').value = '';
-//  }
-
-//  function renderAllPlaylists(){
-//      const playlists = document.getElementById('myplaylist');
-//      playlists.innerHTML = '';
-     
-//      playlists.forEach((playlist, index) => {
-//          const playlistButton = document.createElement('button');
-//          playlistButton.textContent = playlist.name;
-//          playlistButton.className = 'all-playlists';
-//          playlistButton.setAttribute('song-btn-data-id', index);
-     
-//      playlistButton.addEventListener('click', () => {
-//            console.log('Selected Playlist:', playlist.name);
-//      });    
-     
-//      playlistsContainer.appendChild(playlistButton);
-//      });
-//   }
-
-//   document.addEventListener('DOMContentLoaded', function() {
-//        document.getElementById('createPlaylistBtn').addEventListener('click', create-playlist);
-//   });
-//   renderAllPlaylists();
-let saveplaylist= new Map();
 function createPlaylist()
 {
   const playlistid = document.getElementById('playlistid');
   const playlistcontainer = document.getElementById('myplaylistcontainer');
   const playlistbutton = document.createElement('button');
+  const currentplaylistContainer = document.getElementById('playlist');
+  currentplaylistContainer.innerHTML = '';  
   if(playlistid.value){
       playlistbutton.textContent = playlistid.value;
       playlistbutton.className = 'playlistbutton';
@@ -319,12 +255,6 @@ function createPlaylist()
       playlistcontainer.appendChild(playlistbutton);
   }
 }
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('create-playlist').addEventListener('click', createPlaylist);
-});
-document .addEventListener('DOMContentLoaded', function(){
-  document.getElementById('AddToPlaylist').addEventListener('click', addtoplaylist);
-});
 
 function refreshplaylist(playlistid)
 {
@@ -336,11 +266,39 @@ function refreshplaylist(playlistid)
           songButton.className = 'current-playlist-button';
           songButton.textContent = song.SongTitle + " - "+ song.SongSingerName;
           songButton.setAttribute("song-btn-data-id", song.id);
+          songButton.addEventListener('click', () => {
+            index = jsonObject.Songs.findIndex(s => s.id === song.id);
+            updateSong(song);
+        });
           playlistContainer.appendChild(songButton);    
        }); 
     playlist = [];
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('create-playlist').addEventListener('click', createPlaylist);
+});
+document .addEventListener('DOMContentLoaded', function(){
+  document.getElementById('AddToPlaylist').addEventListener('click', addtoplaylist);
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const themeToggleButton = document.getElementById('themeToggleButton');
+  const themeStylesheet = document.getElementById('themeStylesheet');
+  themeToggleButton.addEventListener('click', () => {
+    if (themeStylesheet.getAttribute('href') === 'lightthemestyle.css') 
+      {
+      themeStylesheet.setAttribute('href', 'darkthemestyle.css');
+      themeToggleButton.removeAttribute('checked');
+      } 
+    else 
+    {
+      themeStylesheet.setAttribute('href', 'lightthemestyle.css');
+      themeToggleButton.setAttribute('checked',true);
+    }
+  });
+});
 
   
 
