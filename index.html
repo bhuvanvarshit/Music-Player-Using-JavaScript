@@ -5,12 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="lightthemestyle.css" id="themeStylesheet">
     <script src="/index.js"></script>
     <link href="/favicon.ico" type="image/x-icon" rel="icon" />
 </head>
 <body>
- <div class="title"><h2>Music Player</h2></div>
+ <div class="header">
+    <h2 class="title">Music Player</h2>
+    <label class="switch">
+        <input type="checkbox" class="themeToggleButton" checked="true" id="themeToggleButton">
+        <span class="slider round"><span class="dot"></span></span>
+    </label>
+</div>
      <section class="container">
         <section class="box-container">
         <div class="Genre-container">
